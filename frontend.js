@@ -27,6 +27,7 @@ $(function () {
     var connection = new WebSocket('ws://127.0.0.1:1337');
 
     connection.onopen = function () {
+        console.log("Hello, welcome!")
         // first we want users to enter their names
         input.removeAttr('disabled');
         status.text('Choose name:');
@@ -40,6 +41,7 @@ $(function () {
 
     // most important part - incoming messages
     connection.onmessage = function (message) {
+        console.log("Retrieving messages . . .")
         // try to parse JSON message. Because we know that the server always returns
         // JSON this should work without any problem but we should make sure that
         // the massage is not chunked or otherwise damaged.
@@ -50,6 +52,7 @@ $(function () {
             return;
         }
 
+        console.log("Here is the message from the server guy: ", message)
         // NOTE: if you're not sure about the JSON structure
         // check the server source code above
         if (json.type === 'color') { // first response from the server with user's color
@@ -83,6 +86,7 @@ $(function () {
             }
             // send the message as an ordinary text
             connection.send(msg);
+            console.log("Sending messages . . .")
             $(this).val('');
             // disable the input field to make the user wait until server
             // sends back response
